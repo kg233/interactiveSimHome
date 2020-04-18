@@ -23,6 +23,13 @@ app.intent('devices', (conv) => {
   });
 });
 
+app.intent('show', (conv) => {
+  conv.ask('what is going to happen');
+  conv.ask(
+    new HtmlResponse({ url: 'https://interactivecanvas-3a945.firebaseapp.com' })
+  );
+});
+
 const expressApp = express().use(bodyParser.json());
 
 expressApp.post('/fulfillment', app);
