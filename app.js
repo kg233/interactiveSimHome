@@ -1,11 +1,15 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const { dialogflow, HtmlResponse } = require('actions-on-google');
-const devices = require('./fulfillments/devices');
+const { devices, getEnergy } = require('./fulfillments/');
+
+const projectId = process.env.FIREBASE_CONFIG;
 
 // ... app code here
 const app = dialogflow({
-  debug: true,
+  debug: false,
 });
 
 app.intent('welcome', (conv) => {
@@ -20,14 +24,27 @@ app.intent('devices', (conv) => {
   console.log('received intent devices: ', conv);
   return devices().then((resString) => {
     conv.ask(resString);
+    conv.ask(
+      new HtmlResponse({
+        data: 'hello',
+      })
+    );
   });
 });
 
 app.intent('show', (conv) => {
   conv.ask('what is going to happen');
   conv.ask(
-    new HtmlResponse({ url: 'https://interactivecanvas-3a945.firebaseapp.com' })
+    new HtmlResponse({
+      url: `localhost:3001`,
+    })
   );
+});
+
+app.intent('auditEnergy', (conv) => {
+  return getEnergy(conv.parameters).then((resString) => {
+    conv.add(resString);
+  });
 });
 
 const expressApp = express().use(bodyParser.json());

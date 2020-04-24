@@ -1,1 +1,4 @@
-export { devices } from './devices';
+module.exports = {
+  devices: require('./devices'),
+  getEnergy: require('./getEnergy'),
+};
