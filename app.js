@@ -9,7 +9,7 @@ const projectId = process.env.FIREBASE_CONFIG;
 
 // ... app code here
 const app = dialogflow({
-  debug: false,
+  debug: true,
 });
 
 app.intent('welcome', (conv) => {
