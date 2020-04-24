@@ -33,6 +33,7 @@ app.intent('devices', (conv) => {
   conv.ask('sending response');
   conv.ask(
     new HtmlResponse({
+      url: `https://1b136012.ngrok.io`,
       data: {
         instructions: true,
       },
