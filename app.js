@@ -21,15 +21,23 @@ app.intent('welcome', (conv) => {
 });
 
 app.intent('devices', (conv) => {
-  console.log('received intent devices: ', conv);
-  return devices().then((resString) => {
-    conv.ask(resString);
-    conv.ask(
-      new HtmlResponse({
-        data: 'hello',
-      })
-    );
-  });
+  // console.log('received intent devices: ', conv);
+  // return devices().then((resString) => {
+  //   conv.ask(resString);
+  //   conv.ask(
+  //     new HtmlResponse({
+  //       data: { key: 'hello' },
+  //     })
+  //   );
+  // });
+  conv.ask('sending response');
+  conv.ask(
+    new HtmlResponse({
+      data: {
+        instructions: true,
+      },
+    })
+  );
 });
 
 app.intent('show', (conv) => {
