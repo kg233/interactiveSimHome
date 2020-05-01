@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const { dialogflow, HtmlResponse } = require('actions-on-google');
-const { devices, getEnergy } = require('./fulfillments/');
+const { devices, getEnergy, getMonthly } = require('./fulfillments/');
 
 const projectId = process.env.FIREBASE_CONFIG;
 
@@ -21,24 +21,9 @@ app.intent('welcome', (conv) => {
 });
 
 app.intent('devices', (conv) => {
-  // console.log('received intent devices: ', conv);
-  // return devices().then((resString) => {
-  //   conv.ask(resString);
-  //   conv.ask(
-  //     new HtmlResponse({
-  //       data: { key: 'hello' },
-  //     })
-  //   );
-  // });
-  conv.ask('sending response');
-  conv.ask(
-    new HtmlResponse({
-      url: `https://simhomeinteractive.firebaseapp.com/`,
-      data: {
-        instructions: true,
-      },
-    })
-  );
+  return devices().then((resString) => {
+    conv.ask(resString);
+  });
 });
 
 app.intent('show', (conv) => {
@@ -52,6 +37,12 @@ app.intent('show', (conv) => {
 
 app.intent('auditEnergy', (conv) => {
   return getEnergy(conv.parameters).then((resString) => {
+    conv.add(resString);
+  });
+});
+
+app.intent('monthlyTotal', (conv) => {
+  return getMonthly(conv.parameters).then((resString) => {
     conv.add(resString);
   });
 });
