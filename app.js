@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const { dialogflow, HtmlResponse } = require('actions-on-google');
-const { devices, getEnergy, getMonthly } = require('./fulfillments/');
+const { devices, getEnergy, getMonthly, getTop3 } = require('./fulfillments/');
 
 const projectId = process.env.FIREBASE_CONFIG;
 
@@ -43,6 +43,12 @@ app.intent('auditEnergy', (conv) => {
 
 app.intent('monthlyTotal', (conv) => {
   return getMonthly(conv.parameters).then((resString) => {
+    conv.add(resString);
+  });
+});
+
+app.intent('getTop3', (conv) => {
+  return getTop3().then((resString) => {
     conv.add(resString);
   });
 });
