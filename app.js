@@ -30,7 +30,7 @@ app.intent('show', (conv) => {
   conv.ask('what is going to happen');
   conv.ask(
     new HtmlResponse({
-      url: `https://simhomeinteractive.firebaseapp.com/`,
+      url: `${conv.parameters.url}`,
     })
   );
 });
