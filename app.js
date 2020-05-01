@@ -33,7 +33,7 @@ app.intent('devices', (conv) => {
   conv.ask('sending response');
   conv.ask(
     new HtmlResponse({
-      url: `https://1b136012.ngrok.io`,
+      url: `https://simhomeinteractive.firebaseapp.com/`,
       data: {
         instructions: true,
       },
@@ -45,7 +45,7 @@ app.intent('show', (conv) => {
   conv.ask('what is going to happen');
   conv.ask(
     new HtmlResponse({
-      url: `https://1b136012.ngrok.io`,
+      url: `https://simhomeinteractive.firebaseapp.com/`,
     })
   );
 });
