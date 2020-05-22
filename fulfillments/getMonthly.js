@@ -26,7 +26,6 @@ async function getMonthly(params) {
     endDate = today;
   }
 
-  console.log(JSON.stringify(startDate), JSON.stringify(endDate));
   try {
     let res = await axios.get(
       `${process.env.getTotalURL}?StartDate=${startDate}&EndDate=${endDate}`

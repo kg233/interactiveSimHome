@@ -17,8 +17,7 @@ async function getEnergy(param) {
   }
 
   energyStr = await fetchEnergy(param.deviceName, deviceId, param.datePeriod);
-  console.log('energyStr', energyStr);
-  return energyStr;
+  return { id: deviceId, result: energyStr };
 }
 
 function getId(name) {
@@ -41,7 +40,10 @@ function getId(name) {
     })
     .catch((error) => {
       console.log('getting device id failed');
-      return 'getting device id failed, you can try again';
+      return {
+        id: null,
+        result: 'getting device id failed, you can try again',
+      };
     });
 }
 
@@ -51,12 +53,6 @@ function fetchEnergy(deviceName, id, period) {
   if (typeof period === 'string') {
     period = dayPeriod(period);
   }
-
-  console.log('periods: ', JSON.stringify(period));
-  console.log(
-    'url: ',
-    `${process.env.getEnergyURL}?DeviceID=${id}&StartDate=${period.startDate}&EndDate=${period.endDate}`
-  );
   return axios
     .get(
       `${process.env.getEnergyURL}?DeviceID=${id}&StartDate=${period.startDate}&EndDate=${period.endDate}`
@@ -91,7 +87,10 @@ function fetchEnergy(deviceName, id, period) {
     })
     .catch((err) => {
       console.log(err);
-      return 'failed to get energy data, please try again';
+      return {
+        id: null,
+        result: 'failed to get energy data, please try again',
+      };
     });
 }
 

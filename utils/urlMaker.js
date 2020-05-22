@@ -7,7 +7,6 @@ function urlMaker(base, params) {
     }
     res = res.substring(0, res.length - 1);
   }
-  console.log('url: ', res);
   return res;
 }
 
